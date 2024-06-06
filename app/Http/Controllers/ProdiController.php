@@ -82,4 +82,22 @@ class ProdiController extends Controller
 
     }
 
+    public function update(Request $request, Prodi $prodi){
+          $validateData = $request->validate([
+            'nama' => 'required|min:5|max:20',
+          ]);
+
+          Prodi::where('id',$prodi->id)->update($validateData);
+
+          $request->session()->flash('info','Data berhasil disimpan');
+          return redirect('prodi');
+
+    }
+
+    public function destroy(Prodi $prodi){
+        //echo "x";
+        $prodi->delete();
+        return redirect('prodi')->with('info',"Prodi berhasil dihapus");
+
+    }
 }
